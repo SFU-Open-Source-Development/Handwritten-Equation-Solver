@@ -35,10 +35,11 @@ class _HomeState extends State<Home> {
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: const <Widget>[
-                Text("SFU", style: TextStyle(color: Colors.redAccent, fontSize: 36, fontWeight: FontWeight.bold),),
-                Text("Development Club", style: TextStyle(color: Colors.redAccent, fontSize: 24, fontWeight: FontWeight.bold),),
-                Text("Equation Solver", style: TextStyle(color: Colors.black38, fontSize: 24, fontWeight: FontWeight.bold),),
+              children: <Widget>[
+                Image.asset("image/sfu.png", width: 100,),
+                SizedBox(height: 20),
+                Text("Open Source Development Club", style: TextStyle(color: Colors.red, fontSize: 24, fontWeight: FontWeight.bold),),
+                Text("Hand Written Equation Solver", style: TextStyle(color: Colors.black38, fontSize: 24, fontWeight: FontWeight.bold),),
               ],
             ),
           ],

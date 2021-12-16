@@ -78,7 +78,7 @@ class _SearchClickState extends State<SearchClick> {
         onTap: () async {
           var image = await _picker.pickImage(source: ImageSource.gallery);
           setState(() {_image = image;});
-          debugPrint(image!.path);
+          // debugPrint(image!.path);
         },
         child: Container(
           width: 200,
