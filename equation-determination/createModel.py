@@ -1,45 +1,36 @@
+import numpy as np
 import tensorflow as tf
 from tensorflow import keras
 
-# load MNIST datasets
-mnistDataSet = keras.datasets.mnist
-((x_train, y_train), (x_test, y_test)) = mnistDataSet.load_data()
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Activation, Dense, Flatten, BatchNormalization, Conv2D, MaxPool2D
+from tensorflow.keras.optimizers import Adam
+from tensorflow.keras.metrics import categorical_crossentropy
+from tensorflow.keras.preprocessing.image import ImageDataGenerator
 
-# print the number of datas
-# print(x_train.shape)
-# print(y_train.shape)
-# print(x_test.shape)
-# print(x_test.shape)
+# images
+train_path = 'own-datasets/train'
+valid_path = 'own-datasets/valid'
+train_batches = ImageDataGenerator().flow_from_directory(directory=train_path, target_size=(28,28),classes=['zero','one','two','three','four','five','six','seven','eight','nine','plus','minus','multiplication','division'], batch_size=10)
+valid_batches = ImageDataGenerator().flow_from_directory(directory=valid_path, target_size=(28,28),classes=['zero','one','two','three','four','five','six','seven','eight','nine','plus','minus','multiplication','division'], batch_size=10)
 
-# change [][] --> [] (2D to one array/ list)
-x_train = x_train.reshape(x_train.shape[0], 784)
-#print(x_train.shape)
+# hidden layers
+model = Sequential()
+model.add(Conv2D(input_shape=(28,28,3),filters=32,kernel_size=(3,3),activation="relu", padding="same"))
+model.add(MaxPool2D(pool_size=(2,2),strides=2))
+model.add(Conv2D(filters=64,kernel_size=(3,3),activation="relu", padding="same"))
+model.add(MaxPool2D(pool_size=(2,2),strides=2)) 
+#model.add(Conv2D(filters=128,kernel_size=(3,3),activation="relu", padding="same"))
+#model.add(MaxPool2D(pool_size=(2,2),strides=2))
+model.add(Conv2D(filters=512,kernel_size=(3,3),activation="relu", padding="same"))
+model.add(MaxPool2D(pool_size=(2,2),strides=2)) 
+model.add(Flatten())
+model.add(Dense(units=14, activation="softmax"))
 
-#print(x_train[0][163])
-x_train = x_train/255
-#print(x_train[0][163])
+# train the model
+model.compile(optimizer=Adam(learning_rate=0.0001), loss='categorical_crossentropy', metrics=['accuracy'])
+model.fit(x=train_batches, validation_data=valid_batches, epochs=20, verbose=2)
 
-x_test = x_test.reshape(x_test.shape[0],784)
-x_test = x_test/255
-
-# create a model with multiple layers
-model = keras.models.Sequential()
-model.add(keras.layers.Dense(784, activation='relu')) # first hidden layer with 784 nodes
-model.add(keras.layers.Dense(392, activation='relu')) # second hidden layer with 392 nodes
-model.add(keras.layers.Dense(10, activation='softmax')) # 10 possible outcomes (0~9)
-
-# set optimizer, loss function
-model.compile(optimizer = 'adam', loss = 'sparse_categorical_crossentropy', metrics = ['accuracy'])
-
-# execute the model 3 times
-model.fit(x_train, y_train, epochs = 3) # epochs can be greater
-
-# check model
-model.summary()
-
-# evaluate model
-# shows loss and accuracy
-model.evaluate(x_test, y_test)
-
-# save model
-model.save('handWrittenNum_Detection.h5')
+# save the model
+from keras.models import load_model
+model.save('handWritten_Detection.h5')
