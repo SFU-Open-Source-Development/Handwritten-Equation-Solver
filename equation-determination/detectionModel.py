@@ -45,13 +45,13 @@ def inputImage (i):
             break
 
 #tests
-#result1 = inputImage('numbersTest3/test/zero/1.png') 
+#result1 = inputImage('own-datasets/test/zero/1.png') 
 #print(result1)
-#result2 = inputImage('numbersTest3/test/one/2.png') 
+#result2 = inputImage('own-datasets/test/one/2.png') 
 #print(result2)
-#result3 = inputImage('numbersTest3/test/two/3.png') 
+#result3 = inputImage('own-datasets/test/two/3.png') 
 #print(result3)
-#result4 = inputImage('numbersTest3/test/plus/4.png') 
+#result4 = inputImage('own-datasets/test/plus/4.png') 
 #print(result4)
-#result5 = inputImage('numbersTest3/test/minus/5.png')
+#result5 = inputImage('own-datasets/test/minus/5.png')
 #print(result5)
