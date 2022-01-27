@@ -1,1 +1,5 @@
 opencv-python
+numpy
+tensorflow
+keras
+flask
