@@ -1,6 +1,12 @@
-from flask import Flask, render_template, url_for, redirect
+from flask import Flask, render_template, url_for, redirect,request
+from werkzeug.utils import secure_filename
+
+UPLOAD_FOLDER = './Uploads'
+ALLOWED_EXTENSIONS = { 'pdf', 'png', 'jpg', 'jpeg'}
+
 
 app = Flask(__name__)
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 
 @app.route("/")
@@ -17,5 +23,14 @@ def team():
 def about():
     return render_template("about.html")
 
+
+@app.route("/app")
+def apP():
+    return render_template("app.html")
+
+
+@app.route("/prs",methods=["POST"])
+def prcs():
+    image = request.files["image"]
 
 app.run(debug=True)
